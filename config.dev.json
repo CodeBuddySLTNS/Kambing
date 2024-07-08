@@ -13,7 +13,7 @@
   "language": "en",
   "notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
   "nickNameBot": "CodeBuddy(⁠ ⁠ꈍ⁠ᴗ⁠ꈍ⁠)⁠◜⁠✧",
-  "prefix": "!",
+  "prefix": "-",
   "adminOnly": {
     "enable": false,
     "ignoreCommand": []
