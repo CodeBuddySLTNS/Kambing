@@ -44,6 +44,7 @@ module.exports = {
         } else {
           // Delete the image after it has been sent
           fs.unlinkSync(imagePath);
+          api.setMessageReaction("✅", event.messageID, (err) => {}, true);
         }
       });
     } catch (error) {
