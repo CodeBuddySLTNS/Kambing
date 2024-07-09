@@ -13,7 +13,7 @@ async function handleCommand(api, event, args, message) {
         const { response, messageID } = await getAIResponse(question, event.senderID, event.messageID);
         lastResponseMessageID = messageID;
 
-        api.sendMessage(`🧋✨ | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
+        api.sendMessage(`✧⁠     ∩_∩\n✧⁠◝( ⁠ꈍ⁠ᴗ⁠ꈍ)◜⁠✧  \n┏━━∪∪━━━━━━━━━┓ \n✿        𝗖𝗼𝗱𝗲𝗕𝘂𝗱𝗱𝘆      ✿\n┗━━━━━━━━━━━━━┛\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
     } catch (error) {
         console.error("Error in handleCommand:", error.message);
         message.reply("An error occurred while processing your request.");
