@@ -20,9 +20,10 @@ async function handleCommand(api, event, args, message) {
     }
 }
 
-async function getAnswerFromAI(question) {
+async function getAnswerFromAI(question, id) {
     try {
         const services = [
+            { url: 'https://rest-api-codebuddy.onrender.com/api/gpt4o', params: { prompt: question, id: id } },
             { url: 'https://markdevs-last-api.onrender.com/gpt4', params: { prompt: question, uid: 'your-uid-here' } },
             { url: 'http://markdevs-last-api.onrender.com/api/v2/gpt4', params: { query: question } },
             { url: 'https://markdevs-last-api.onrender.com/api/v3/gpt4', params: { ask: question } }
@@ -59,7 +60,7 @@ async function fetchFromAI(url, params) {
 async function getAIResponse(input, userId, messageID) {
     const query = input.trim() || "hi";
     try {
-        const response = await getAnswerFromAI(query);
+        const response = await getAnswerFromAI(query, userId);
         return { response, messageID };
     } catch (error) {
         console.error("Error in getAIResponse:", error.message);
