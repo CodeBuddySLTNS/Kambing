@@ -49,11 +49,6 @@ animagine: {
     description: "View all commands",
     guide: "-help\n-help <command name>"
   },
-  prefix: {
-    name: "prefix",
-    description: "view some commands and shows bot's prefix",
-    guide: "prefix"
-  },
   uptime: {
     name: "uptime",
     description: "See how long the bot has been running.",
@@ -68,8 +63,8 @@ animagine: {
 
 module.exports = {
   config: {
-    name: "help",
-    aliases: ["help"],
+    name: "options",
+    aliases: ["opt"],
     version: 1.0,
     author: "LiANE&Coffee",
     shortDescription: { en: "View all commands" },
@@ -98,7 +93,6 @@ module.exports = {
 │ - Lyrics
 │ - Alldl
 │ - Help
-│ - Prefix
 │ - Tempmail
 │ - Unsend
 │ - Uptime
@@ -107,7 +101,7 @@ module.exports = {
 𝚃𝚘 𝚜𝚎𝚎 𝚑𝚘𝚠 𝚝𝚘 𝚞𝚜𝚎
 𝚝𝚑𝚎 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜.
 
-Example: -help ai
+Example: -options ai
 ━━━━━━━━━━━━━━━━`;
 
       return message.reply(commandsList);
