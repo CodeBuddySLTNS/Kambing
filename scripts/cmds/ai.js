@@ -84,22 +84,44 @@ module.exports = {
             api.sendMessage(`✧⁠     ∩_∩\n✧⁠◝( ⁠ꈍ⁠ᴗ⁠ꈍ)◜⁠✧  \n┏━━∪∪━━━━━━━━━┓ \n✿        𝗖𝗼𝗱𝗲𝗕𝘂𝗱𝗱𝘆      ✿\n┗━━━━━━━━━━━━━┛\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
         } catch (error) {
             console.error("Error in onStart:", error.message);
-            api.sendMessage("An error occurred while processing your request.", event.threadID);
+            api.sendMessage("Something went wrong.", event.threadID);
         }
     },
     onChat: async function ({ event, message, api }) {
         const messageContent = event.body.trim().toLowerCase();
-
+        
         // Check if the message is a reply to the bot's message or starts with "ai"
         if ((event.messageReply && event.messageReply.senderID === api.getCurrentUserID()) || (messageContent.startsWith("ai") && event.senderID !== api.getCurrentUserID())) {
             const input = messageContent.replace(/^ai\s*/, "").trim();
+            
+            const getImageUrl = () => {
+              if (event.type === "message_reply") {
+                const replyAttachment = event.messageReply.attachments[0];
+                if (["photo", "sticker"].includes(replyAttachment?.type)) {
+                  return replyAttachment.url;
+                } else {
+                  return null;
+                }
+              }
+            }
+            const imageUrl = await getImageUrl();
+            if (imageUrl) {
+              try {
+                const { data } = await axios.get(`https://rest-api-codebuddy.onrender.com/api/gemini?id=${event.senderID}&prompt=${input}&url=${imageUrl}`);
+                const geminiAns = data.reply;
+                return api.sendMessage(`✧⁠     ∩_∩\n✧⁠◝( ⁠ꈍ⁠ᴗ⁠ꈍ)◜⁠✧  \n┏━━∪∪━━━━━━━━━┓ \n✿        𝗖𝗼𝗱𝗲𝗕𝘂𝗱𝗱𝘆      ✿\n┗━━━━━━━━━━━━━┛\n━━━━━━━━━━━━━━━━\n${geminiAns}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
+              } catch (e) {
+                console.error(`Error at gemini image: ${e}`)
+              }
+            }
+        
             try {
                 const { response, messageID } = await getAIResponse(input, event.senderID, event.messageID);
                 lastResponseMessageID = messageID;
                 api.sendMessage(`✧⁠     ∩_∩\n✧⁠◝( ⁠ꈍ⁠ᴗ⁠ꈍ)◜⁠✧  \n┏━━∪∪━━━━━━━━━┓ \n✿        𝗖𝗼𝗱𝗲𝗕𝘂𝗱𝗱𝘆      ✿\n┗━━━━━━━━━━━━━┛\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
             } catch (error) {
                 console.error("Error in onChat:", error.message);
-                api.sendMessage("An error occurred while processing your request.", event.threadID);
+                api.sendMessage("Something went wrong.", event.threadID);
             }
         }
     },
